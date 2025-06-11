@@ -1,1 +1,5 @@
-# SVU_MLT_F24_AbdulRahman_Julia_Rand
+## Team Members
+
+- `abdulrahman_290065`
+- `rand_293968`
+- `julia_298202`
