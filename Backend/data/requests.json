@@ -1,0 +1,48 @@
+[
+  {
+    "Gender": "Male",
+    "Married": "Yes",
+    "Dependents": "1",
+    "Education": "Graduate",
+    "Self_Employed": "No",
+    "ApplicantIncome": 5000.0,
+    "CoapplicantIncome": 0.0,
+    "LoanAmount": 150.0,
+    "Loan_Amount_Term": 360.0,
+    "Credit_History": 1.0,
+    "Property_Area": "Urban",
+    "prediction": "Approved",
+    "id": "b004435d-3918-4438-8b7c-77325ea92091"
+  },
+  {
+    "Gender": "Male",
+    "Married": "Yes",
+    "Dependents": "1",
+    "Education": "Graduate",
+    "Self_Employed": "No",
+    "ApplicantIncome": 5000.0,
+    "CoapplicantIncome": 0.0,
+    "LoanAmount": 150.0,
+    "Loan_Amount_Term": 360.0,
+    "Credit_History": 1.0,
+    "Property_Area": "Urban",
+    "prediction": "Approved",
+    "id": "1b448751-0d18-49f7-9e35-6d7a72f0a024"
+  },
+  {
+    "Gender": "Male",
+    "Married": "No",
+    "Dependents": "1",
+    "Education": "Graduate",
+    "Self_Employed": "No",
+    "ApplicantIncome": 5000.0,
+    "CoapplicantIncome": 0.0,
+    "LoanAmount": 150.0,
+    "Loan_Amount_Term": 360.0,
+    "Credit_History": 1.0,
+    "Property_Area": "Urban",
+    "prediction": "Approved",
+    "approval_probability": 83.0,
+    "id": "a798e91a-7bf3-49ac-8017-5715e8a78682"
+  }
+]
