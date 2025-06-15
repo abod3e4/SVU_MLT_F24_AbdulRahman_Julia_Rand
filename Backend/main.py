@@ -15,6 +15,7 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/eda-charts")
