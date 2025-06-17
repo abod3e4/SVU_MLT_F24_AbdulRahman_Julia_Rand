@@ -52,6 +52,13 @@ def get_all_requests():
     data = load_requests()
     return {"count": len(data), "requests": data}
 
+
 @router.get("/eda-summary")
 def eda_summary():
     return generate_eda_summary()
+
+
+@router.get("/model-metrics")
+def model_metrics():
+    return get_model_metrics()
+
