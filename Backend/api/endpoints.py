@@ -57,6 +57,9 @@ def get_all_requests():
 def eda_summary():
     return generate_eda_summary()
 
+@router.get("/report/data-issues")
+def report_data_issues():
+    return analyze_data_issues()
 
 @router.get("/model-metrics")
 def model_metrics():
