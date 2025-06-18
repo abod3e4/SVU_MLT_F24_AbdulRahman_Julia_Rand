@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrustBank</title>
+    <link rel="stylesheet" href="Loan_requests_table.css" />
+    <script>
+      // حذف طلب
+      function deleteLoan(loanID) {
+        console.log("محاولة حذف الطلب رقم:", loanID); // سجل المعرف للتحقق من البيانات
+
+        if (!confirm(`هل أنت متأكد من حذف الطلب رقم ${loanID}؟`)) {
+          return;
+        }
+
+        fetch(`https://mlt.vilmo.app/remove-request/${loanID}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            console.log("استجابة الحذف:", response); // تحقق من الاستجابة
+
+            if (response.ok) {
+              alert(`تم حذف الطلب رقم ${loanID} بنجاح.`);
+              const row = document.getElementById("loan-" + loanID);
+              if (row) row.remove(); // إزالة الصف من الجدول
+            } else {
+              alert(`فشل حذف الطلب رقم ${loanID}.`);
+            }
+          })
+          .catch((error) => {
+            console.error("خطأ في الاتصال:", error);
+            alert("حدث خطأ في الاتصال بالسيرفر.");
+          });
+      }
+
+      // تحميل جميع الطلبات عند تحميل الصفحة
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("https://mlt.vilmo.app/all-requests")
+          .then((res) => res.json())
+          .then((data) => {
+            if (!data.requests) {
+              console.error("البيانات غير صحيحة:", data);
+              alert("حدث خطأ أثناء تحميل الطلبات.");
+              return;
+            }
+
+            const tbody = document.querySelector("tbody");
+            tbody.innerHTML = ""; // تنظيف الجدول قبل تحميل البيانات
+
+            Object.entries(data.requests).forEach(([loanID, request]) => {
+              const tr = document.createElement("tr");
+              tr.id = `loan-${loanID}`; // إضافة ID للصف لتسهيل الحذف
+
+              tr.innerHTML = `
+            <td>${request.id}</td>
+            <td>${request.Gender}</td>
+            <td>${request.Married}</td>
+            <td>${request.Dependents}</td>
+            <td>${request.Education}</td>
+            <td>${request.Self_Employed}</td>
+            <td>${request.ApplicantIncome}</td>
+            <td>${request.CoapplicantIncome}</td>
+            <td>${request.LoanAmount ?? ""}</td>
+            <td>${request.Loan_Amount_Term}</td>
+            <td>${request.Credit_History}</td>
+            <td>${request.Property_Area}</td>
+            <td>${request.prediction}</td>
+            <td><button onclick="deleteLoan('${
+              request.id
+            }')">Delete</button></td>
+          `;
+
+              tbody.appendChild(tr);
+            });
+          })
+          .catch((err) => {
+            console.error("فشل في تحميل الطلبات:", err);
+            alert("حدث خطأ أثناء تحميل طلبات القروض.");
+          });
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="logo">TrustBank</div>
+      <p class="tagline">’’Your Financial Partner’’</p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <h2 style="text-align: center">Loan Requests</h2>
+      <table border="1" cellpadding="5">
+        <thead>
+          <tr>
+            <th>Loan_ID</th>
+            <th>Gender</th>
+            <th>Married</th>
+            <th>Dependents</th>
+            <th>Education</th>
+            <th>Self_Employed</th>
+            <th>Applicant_Income</th>
+            <th>Coapplicant_Income</th>
+            <th>Loan_Amount</th>
+            <th>Loan_Amount_Term</th>
+            <th>Credit_History</th>
+            <th>Property_Area</th>
+            <th>Loan_Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </main>
+
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <h2>TrustBank</h2>
+          <p>Your trusted financial partner.</p>
+        </div>
+        <div class="footer-contact">
+          <h3>Contact Us</h3>
+          <p>Email: info@trustbank.com</p>
+          <p>Phone: +963-800-TRUSTBANK</p>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 TrustBank. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

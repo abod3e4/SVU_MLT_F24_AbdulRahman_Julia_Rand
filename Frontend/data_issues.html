@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Data Issues Report - TrustBank</title>
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="data_issues.css" />
+	</head>
+	<body>
+		<!-- Header and Nav -->
+		<header>
+			<div class="logo">TrustBank</div>
+			<p class="tagline">’’Your Financial Partner’’</p>
+		</header>
+
+		<nav>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="eda_summary.html">EDA Summary</a></li>
+				<li><a href="data_issues.html" class="active">Data Issues</a></li>
+				<li><a href="#">About Us</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main Section -->
+		<main>
+			<h2 style="text-align: center; margin-bottom: 30px; font-size: 26px">
+				Data Quality Report
+			</h2>
+			
+			<div class="report-container">
+				<!-- Initial Issues Section -->
+				<section class="issues-section">
+					<h3>Initial Data Issues Detected</h3>
+					
+					<div class="issues-grid">
+						<!-- Missing Values -->
+						<div class="issue-card">
+							<h4>Missing Values</h4>
+							<div class="issue-table-container">
+								<table class="issue-table">
+									<thead>
+										<tr>
+											<th>Feature</th>
+											<th>Missing Count</th>
+										</tr>
+									</thead>
+									<tbody id="missingValuesBody">
+										<!-- Will be populated by JavaScript -->
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+						<!-- Outliers -->
+						<div class="issue-card">
+							<h4>Outliers</h4>
+							<div class="issue-table-container">
+								<table class="issue-table">
+									<thead>
+										<tr>
+											<th>Feature</th>
+											<th>Outlier Count</th>
+										</tr>
+									</thead>
+									<tbody id="outliersBody">
+										<!-- Will be populated by JavaScript -->
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</section>
+				
+				<!-- Fixes Applied Section -->
+				<section class="fixes-section">
+					<h3>Fixes Applied</h3>
+					
+					<div class="fixes-grid">
+						<!-- Missing Values Fixes -->
+						<div class="fix-card">
+							<h4>Missing Values Fixes</h4>
+							<div class="fix-table-container">
+								<table class="fix-table">
+									<thead>
+										<tr>
+											<th>Feature</th>
+											<th>Fix Method</th>
+										</tr>
+									</thead>
+									<tbody id="missingFixesBody">
+										<!-- Will be populated by JavaScript -->
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+						<!-- Outliers Fixes -->
+						<div class="fix-card">
+							<h4>Outliers Fixes</h4>
+							<div class="fix-table-container">
+								<table class="fix-table">
+									<thead>
+										<tr>
+											<th>Feature</th>
+											<th>Fix Method</th>
+										</tr>
+									</thead>
+									<tbody id="outlierFixesBody">
+										<!-- Will be populated by JavaScript -->
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</section>
+				
+				<!-- Final Notes Section -->
+				<section class="notes-section">
+					<h3>Final Notes</h3>
+					<div class="notes-card">
+						<ul id="finalNotesList">
+							<!-- Will be populated by JavaScript -->
+						</ul>
+					</div>
+				</section>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer>
+			<div class="footer-container">
+				<div class="footer-brand">
+					<h2>TrustBank</h2>
+					<p>Your trusted financial partner.</p>
+				</div>
+				<div class="footer-contact">
+					<h3>Contact Us</h3>
+					<p>Email: info@trustbank.com</p>
+					<p>Phone: +963-800-TRUSTBANK</p>
+				</div>
+				<div class="footer-links">
+					<h3>Quick Links</h3>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="eda_summary.html">EDA Summary</a></li>
+						<li><a href="data_issues.html">Data Issues</a></li>
+						<li><a href="#">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="footer-bottom">
+				<p>&copy; 2025 TrustBank. All rights reserved.</p>
+			</div>
+		</footer>
+
+		<!-- JavaScript -->
+		<script>
+			fetch("https://mlt.vilmo.app/report/data-issues")
+				.then((res) => res.json())
+				.then((data) => {
+					// Populate Missing Values table
+					const missingValuesBody = document.getElementById("missingValuesBody");
+					for (const [feature, count] of Object.entries(data.initial_issues.missing_values)) {
+						const row = document.createElement("tr");
+						row.innerHTML = `
+							<td>${feature}</td>
+							<td>${count}</td>
+						`;
+						missingValuesBody.appendChild(row);
+					}
+					
+					// Populate Outliers table
+					const outliersBody = document.getElementById("outliersBody");
+					for (const [feature, count] of Object.entries(data.initial_issues.outliers)) {
+						const row = document.createElement("tr");
+						row.innerHTML = `
+							<td>${feature}</td>
+							<td>${count}</td>
+						`;
+						outliersBody.appendChild(row);
+					}
+					
+					// Populate Missing Values Fixes table
+					const missingFixesBody = document.getElementById("missingFixesBody");
+					for (const [feature, method] of Object.entries(data.fixes_applied.missing_values_fixes)) {
+						const row = document.createElement("tr");
+						row.innerHTML = `
+							<td>${feature}</td>
+							<td>${method}</td>
+						`;
+						missingFixesBody.appendChild(row);
+					}
+					
+					// Populate Outliers Fixes table
+					const outlierFixesBody = document.getElementById("outlierFixesBody");
+					for (const [feature, method] of Object.entries(data.fixes_applied.outliers_fixed)) {
+						const row = document.createElement("tr");
+						row.innerHTML = `
+							<td>${feature}</td>
+							<td>${method}</td>
+						`;
+						outlierFixesBody.appendChild(row);
+					}
+					
+					// Populate Final Notes list
+					const finalNotesList = document.getElementById("finalNotesList");
+					data.final_notes.forEach(note => {
+						const li = document.createElement("li");
+						li.textContent = note;
+						finalNotesList.appendChild(li);
+					});
+				})
+				.catch((err) => {
+					console.error("Error fetching data issues report:", err);
+					alert("Failed to load data issues report. Please try again later.");
+				});
+		</script>
+	</body>
+</html>
