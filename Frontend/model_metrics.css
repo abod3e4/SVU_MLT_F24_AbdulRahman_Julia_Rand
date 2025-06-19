@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f9fc;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* ===== Header ===== */
+header {
+  background-color: #002d5c;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  margin-top: 8px;
+  color: #cce6ff;
+  font-style: italic;
+}
+
+/* ===== Navbar ===== */
+nav {
+  background-color: #004a99;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 15px 0;
+}
+
+nav ul li {
+  margin: 0 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
+nav ul li a:hover {
+  background-color: #003366;
+}
+
+/* ===== Main Section ===== */
+main {
+  padding: 50px 30px;
+  min-height: 70vh;
+  background-color: #f9fbfd;
+}
+
+/* ===== Dashboard Cards ===== */
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  flex: 0 0 calc(50% - 20px);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  padding: 40px 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 220px;
+}
+
+.card a {
+  text-decoration: none;
+  color: #002d5c;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: block;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Footer ===== */
+footer {
+  background-color: #002d5c;
+  color: white;
+  padding: 40px 20px 20px;
+  font-size: 0.95rem;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand h2 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  color: #cce6ff;
+}
+
+.footer-brand p {
+  color: #d0e1f9;
+}
+
+.footer-contact h3,
+.footer-links h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #cce6ff;
+}
+
+.footer-contact p {
+  margin-bottom: 6px;
+  color: #e0eaff;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #e0eaff;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  color: #ccd6e0;
+}
+
+#metrics {
+  max-width: 400px;
+  margin: 30px auto;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  padding: 25px 30px;
+  font-size: 1.1rem;
+  color: #002d5c;
+  font-weight: 500;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e6f1;
+}
+
+.metric:last-child {
+  border-bottom: none;
+}
+
+.metric strong {
+  color: #004a99;
+  font-weight: 600;
+}
+
+/* When no metrics */
+#metrics p {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}
+
+main h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 40px;
+  letter-spacing: -0.025em;
+  background: #fafbfc;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  header {
+    padding: 25px 15px;
+  }
+
+  .logo {
+    font-size: 2rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  nav ul {
+    flex-direction: column;
+    padding: 10px 0;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  main {
+    padding: 30px 15px;
+  }
+
+  .dashboard-cards {
+    justify-content: center;
+    gap: 15px;
+    max-width: 100%;
+  }
+
+  .card {
+    flex: 0 0 100%;
+    min-width: unset;
+    padding: 30px 15px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-container > div {
+    margin-bottom: 20px;
+  }
+}
