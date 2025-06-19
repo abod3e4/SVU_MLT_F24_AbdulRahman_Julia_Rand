@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Model Metrics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="model_metrics.css" /></head>
+<body>
+  <header>
+    <div class="logo">My Dashboard</div>
+    <div class="tagline">AI Model Performance Overview</div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+
+  <main>
+    <h2 >Model Performance Metrics</h2>
+    <div id="metrics">
+      <p>Loading metrics...</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-bottom">© 2025 Your Company. All rights reserved.</div>
+  </footer>
+
+  <script>
+    fetch("https://mlt.vilmo.app/model-metrics")
+      .then(response => response.json())
+      .then(data => {
+        if (data) {
+          document.getElementById("metrics").innerHTML = `
+            <div class="metric"><strong>Accuracy:</strong> ${data.accuracy.toFixed(2)}</div>
+            <div class="metric"><strong>Precision:</strong> ${data.precision.toFixed(2)}</div>
+            <div class="metric"><strong>Recall:</strong> ${data.recall.toFixed(2)}</div>
+            <div class="metric"><strong>F1 Score:</strong> ${data.f1_score.toFixed(2)}</div>
+          `;
+        } else {
+          document.getElementById("metrics").innerHTML = "<p>No metrics available.</p>";
+        }
+      })
+      .catch(err => {
+        console.error("Error loading metrics:", err);
+        document.getElementById("metrics").innerHTML = "<p style='color: red;'>Error loading metrics.</p>";
+      });
+  </script>
+</body>
+</html>
