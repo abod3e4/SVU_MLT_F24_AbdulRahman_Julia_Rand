@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>EDA Summary - TrustBank</title>
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="eda_summary.css" />
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+	</head>
+	<body>
+		<!-- Header and Nav -->
+		<header>
+			<div class="logo">TrustBank</div>
+			<p class="tagline">’’Your Financial Partner’’</p>
+		</header>
+
+		<nav>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="#">Services</a></li>
+				<li><a href="#">About Us</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main Section -->
+		<main>
+			<h2 style="text-align: center; margin-bottom: 30px; font-size: 26px">
+				EDA Summary
+			</h2>
+			<div
+				class="dashboard-cards"
+				style="flex-direction: column; align-items: center"
+			>
+				<div class="chart-row">
+					<div class="chart-card">
+						<h3>Prediction Distribution</h3>
+						<canvas id="predictionChart"></canvas>
+					</div>
+					<div class="chart-card">
+						<h3>Gender Distribution</h3>
+						<canvas id="genderChart"></canvas>
+					</div>
+				</div>
+
+				<div class="chart-row">
+					<div class="chart-card">
+						<h3>Area Distribution</h3>
+						<canvas id="areaChart"></canvas>
+					</div>
+					<div class="chart-card">
+						<h3>Married Distribution</h3>
+						<canvas id="marriedChart"></canvas>
+					</div>
+				</div>
+
+				<div class="summary-container">
+					<div class="summary-card">
+						<h3>Total Requests</h3>
+						<div class="value" id="totalRequests">-</div>
+						<p>Total loan applications analyzed</p>
+					</div>
+					<div class="summary-card">
+						<h3>Average Loan Amount</h3>
+						<div class="value" id="avgLoan">-</div>
+						<div class="unit">USD</div>
+						<p>Average requested loan amount</p>
+					</div>
+					<div class="summary-card">
+						<h3>Average Income</h3>
+						<div class="value" id="avgIncome">-</div>
+						<div class="unit">USD/year</div>
+						<p>Average applicant income</p>
+					</div>
+					<div class="summary-card">
+						<h3>Approval Rate</h3>
+						<div class="value" id="approvalRate">-</div>
+						<div class="unit">%</div>
+						<p>Percentage of approved loans</p>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer>
+			<div class="footer-container">
+				<div class="footer-brand">
+					<h2>TrustBank</h2>
+					<p>Your trusted financial partner.</p>
+				</div>
+				<div class="footer-contact">
+					<h3>Contact Us</h3>
+					<p>Email: info@trustbank.com</p>
+					<p>Phone: +963-800-TRUSTBANK</p>
+				</div>
+				<div class="footer-links">
+					<h3>Quick Links</h3>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="#">Services</a></li>
+						<li><a href="#">About</a></li>
+						<li><a href="#">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="footer-bottom">
+				<p>&copy; 2025 TrustBank. All rights reserved.</p>
+			</div>
+		</footer>
+
+		<!-- JavaScript -->
+		<script>
+			fetch("https://mlt.vilmo.app/eda-summary")
+				.then((res) => res.json())
+				.then((data) => {
+					// Summary boxes
+					document.getElementById("totalRequests").textContent =
+						data.total_requests;
+					document.getElementById("avgLoan").textContent =
+						data.average_loan_amount.toFixed(2);
+					document.getElementById("avgIncome").textContent =
+						data.average_applicant_income.toFixed(2);
+					// Calculate approval rate
+					const approved = data.prediction_distribution.Approved || 0;
+					const rejected = data.prediction_distribution.Rejected || 0;
+					const approvalRate = (approved / (approved + rejected)) * 100;
+					document.getElementById("approvalRate").textContent =
+						approvalRate.toFixed(1);
+
+					function createChart(
+						canvasId,
+						type,
+						distribution,
+						colors,
+						xAxisLabel = "",
+						yAxisLabel = ""
+					) {
+						const labels = Object.keys(distribution);
+						const values = Object.values(distribution);
+						const total = values.reduce((sum, val) => sum + val, 0);
+
+						new Chart(document.getElementById(canvasId), {
+							type,
+							data: {
+								labels,
+								datasets: [
+									{
+										label: "",
+										data: values,
+										backgroundColor: colors,
+										borderWidth: 1,
+									},
+								],
+							},
+							options: {
+								responsive: true,
+								maintainAspectRatio: false,
+								plugins: {
+									legend: {
+										display: type !== "bar",
+									},
+									datalabels:
+										type === "pie" || type === "doughnut"
+											? {
+													formatter: (value) => {
+														const percent = (value / total) * 100;
+														return percent.toFixed(1) + "%";
+													},
+													color: "#fff",
+													font: {
+														weight: "bold",
+														size: 14,
+													},
+											  }
+											: false,
+								},
+								scales:
+									type === "bar"
+										? {
+												x: {
+													title: {
+														display: !!xAxisLabel,
+														text: xAxisLabel,
+													},
+													ticks: {
+														autoSkip: false,
+													},
+												},
+												y: {
+													beginAtZero: true,
+													title: {
+														display: !!yAxisLabel,
+														text: yAxisLabel,
+													},
+												},
+										  }
+										: {},
+							},
+							plugins: [ChartDataLabels], // Required to activate the plugin
+						});
+					}
+
+					// Create charts
+					createChart(
+						"predictionChart",
+						"doughnut",
+						data.prediction_distribution,
+						["#4CAF50", "#F44336"]
+					);
+					createChart(
+						"genderChart",
+						"bar",
+						data.gender_distribution,
+						["#2196F3", "#E91E63"],
+						"Gender",
+						"Count"
+					);
+					createChart("areaChart", "pie", data.area_distribution, [
+						"#3F51B5",
+						"#FF9800",
+						"#009688",
+					]);
+					createChart(
+						"marriedChart",
+						"bar",
+						data.married_distribution,
+						["#9C27B0", "#FFC107"],
+						"Marital Status",
+						"Count"
+					);
+				})
+				.catch((err) => {
+					console.error("Error fetching EDA summary:", err);
+				});
+		</script>
+	</body>
+</html>
