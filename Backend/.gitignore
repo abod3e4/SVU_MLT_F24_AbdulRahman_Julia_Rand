@@ -80,12 +80,6 @@ log/
 .env.production.local
 
 # Model files and data
-*.pkl
-*.h5
-*.model
-*.joblib
-data/raw/
-data/processed/
 
 # System Files
 .DS_Store
